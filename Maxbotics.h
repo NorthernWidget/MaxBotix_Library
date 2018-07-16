@@ -21,10 +21,10 @@ Distributed as-is; no warranty is given.
 
 #include "Arduino.h"
 
-class Maxboitics
+class Maxbotics
 {
 	public:
-		Maxboitics();
+		Maxbotics();
 		uint8_t begin(); //use default address
 		float GetRange();
 		String GetHeader();

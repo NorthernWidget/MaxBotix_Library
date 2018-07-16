@@ -16,6 +16,8 @@ Dilbert (thought): "A little knowledge can be a ridiculous thing."
 Distributed as-is; no warranty is given.
 ******************************************************************************/
 
+#include "Maxbotics.h"
+
 Maxbotics::Maxbotics() 
 {
 
