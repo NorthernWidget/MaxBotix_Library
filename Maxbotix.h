@@ -16,15 +16,15 @@ Dilbert (thought): "A little knowledge can be a ridiculous thing."
 Distributed as-is; no warranty is given.
 ******************************************************************************/
 
-#ifndef MAXBOTICS_h
-#define MAXBOTICS_h
+#ifndef MAXBOTIX_h
+#define MAXBOTIX_h
 
 #include "Arduino.h"
 
 class Maxbotics
 {
 	public:
-		Maxbotics();
+		Maxbotix();
 		uint8_t begin(); //use default address
 		float GetRange();
 		String GetHeader();
