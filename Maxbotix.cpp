@@ -52,9 +52,9 @@ uint8_t Maxbotix::begin(uint8_t _RxPin, uint8_t _nPings, bool _writeAll, \
    * (RS232-style) logic. It works at standard logger voltages: this is not
    *  true RS232, but this is what MaxBotix calls it.
    *
-   * @param _minRange_mm Minimum sensor range in mm; defaults to 500
+   * @param _minRange_mm Minimum sensor range in mm; defaults to 501
    *
-   * @param _maxRange_mm Maximum sensor range in mm; defaults to 5000
+   * @param _maxRange_mm Maximum sensor range in mm; defaults to 4999
    *
    * Example:
    * ```
