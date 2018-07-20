@@ -39,7 +39,7 @@ uint8_t Maxbotix::begin(uint8_t _RxPin, uint8_t _npings, bool _writeAll, \
    *
    * @param _npings Number of pings over which you average; each ping itself
    * includes ten short readings that the sensor internally processes.
-   * Must be > 0, obviously. Defaults to "1"
+   * Must be > 0, obviously, and <= 255. Defaults to "1"
    *
    * @param _writeAll will write each reading of the sensor (each ping)
    * to the serial monitor and SD card. This is relevant only if npings > 1
@@ -58,12 +58,11 @@ uint8_t Maxbotix::begin(uint8_t _RxPin, uint8_t _npings, bool _writeAll, \
    *
    * Example:
    * ```
-   * // SoftwareSerial on , averaging over 10 pings,
-   * // not recording the results of each ping, and with a maximum range of
-   * // 5000 mm using standard TTL logic
-   * alog.maxbotixHRXL_WR_Serial(7, 10, false, 5000, false);
-   *
+   * // SoftwareSerial with RxPin 7, averaging over 10 pings, and otherwise
+   * // using default settings
+   * alog.maxbotixHRXL_WR_Serial(7, 10);
    * ```
+   *
    */
 
     RxPin = _RxPin;
@@ -76,7 +75,14 @@ uint8_t Maxbotix::begin(uint8_t _RxPin, uint8_t _npings, bool _writeAll, \
     
     // Not sure if this will work
     softSerial = new SoftwareSerial(RxPin, -1);
-
+    
+    // Test if npings is in the proper range
+    if nPings == 0 {
+      return false
+    }
+    else {
+      return true
+    }
 }
 
 
@@ -89,41 +95,22 @@ float Maxbotix::GetRange()  //will retrun distance to surface
    *
    * @details
    * Returns the result of a single range measurement
-   * @param _RxPin Pin for SoftwareSerial receive at 1200 bps.
    *
-   * @param _npings Number of pings over which you average; each ping itself
-   * includes ten short readings that the sensor internally processes.
-   * Must be > 0, obviously. Defaults to "1"
-   *
-   * @param _writeAll will write each reading of the sensor (each ping)
-   * to the serial monitor and SD card. This is relevant only if npings > 1
-   *
-   * @param _ExPin Excitation pin that turns the sensor on; defaults to "-1",
-   * assuming that the sensor is either always on or is being switched via
-   * its main power supply.
-   *
-   * @param _RS232 defaults false for standard (TTL) logic; true for inverse
-   * (RS232-style) logic. It works at standard logger voltages: this is not
-   *  true RS232, but this is what MaxBotix calls it.
-   *
-   * @param _minRange_mm Minimum sensor range in mm; defaults to 500
-   *
-   * @param _maxRange_mm Maximum sensor range in mm; defaults to 5000
-   *
-   * Example:
-   * ```
-   * // Digital pin 7 controlling sensor excitation, averaging over 10 pings,
-   * // not recording the results of each ping, and with a maximum range of
-   * // 5000 mm using standard TTL logic
-   * alog.maxbotixHRXL_WR_Serial(7, 10, false, 5000, false);
-   *
-   * ```
    */
   return 1701.0; //return dummy value until library is completed 
 }
 
-String Maxbotix::GetHeader()  //Add other stats if desired
+String Maxbotix::GetHeader()
 {
+  /**
+   * @brief
+   * Creates the appropritae header for the data file
+   *
+   * @details
+   * Creates the appropritae header for the data file, based on
+   * provided inputs (number of pings, recording all pings)
+   *
+   */
   if (npings == 1){
     return "Distace [mm]";
   }
@@ -138,11 +125,20 @@ String Maxbotix::GetHeader()  //Add other stats if desired
         allPings = String(allPings + "Distace [mm],");
       }
     }
-    return String(allPings + "Mean Distace [mm],StDev Distance [mm]");
+    return String(allPings + \
+                  "Mean Distace [mm],StDev Distance [mm],Error Count");
   }
 }
 
 String Maxbotix::GetString()
+  /**
+   * @brief
+   * Returns the measurement result(s) as a String object
+   *
+   * @details
+   * Returns the measurement result(s) as a String object
+   *
+   */
 {
   return String(GetRange()) + ",";  //Return range as string
 }

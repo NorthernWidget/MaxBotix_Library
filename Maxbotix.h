@@ -37,9 +37,9 @@ class Maxbotix
 {
 	public:
 		Maxbotix();
-		uint8_t begin(uint8_t _RxPin, uint8_t _npings=1, bool _writeAll=false, \
-                  uint8_t _ExPin=-1, bool _RS232=false, \
-                  uint16_t _minRange_mm=500, uint16_t _maxRange_mm=5000);
+		bool begin(uint8_t _RxPin, uint8_t _npings=1, bool _writeAll=false, \
+               uint8_t _ExPin=-1, bool _RS232=false, \
+               uint16_t _minRange_mm=500, uint16_t _maxRange_mm=5000);
 		float GetRange();
 		float GetRanges();
 		String GetHeader();
