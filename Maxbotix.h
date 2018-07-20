@@ -25,7 +25,7 @@ Distributed as-is; no warranty is given.
 // GLOBALS //
 /////////////
 
-uint8_t RxPin;
+uint8_t RxPin; // need not be global
 uint8_t npings;
 bool writeAll;
 uint8_t ExPin;
@@ -46,6 +46,7 @@ class Maxbotix
 		String GetString();
 
 	private:
+    SoftwareSerial *softSerial;
 		
 };
 

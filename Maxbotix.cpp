@@ -28,11 +28,12 @@ uint8_t Maxbotix::begin(uint8_t _RxPin, uint8_t _npings, bool _writeAll, \
 {
   /**
    * @brief
-   * Sets globals.
+   * Sets globals and initializes software serial
    *
    * @details
    * Sets global variables required for a SoftwareSerial interface to record 
-   * data from a MaxBotix ultrasonic rangefinder.
+   * data from a MaxBotix ultrasonic rangefinder. Initializes software serial 
+   * based on _RxPin.
    *
    * @param _RxPin Pin for SoftwareSerial receive at 1200 bps.
    *
@@ -72,6 +73,10 @@ uint8_t Maxbotix::begin(uint8_t _RxPin, uint8_t _npings, bool _writeAll, \
     RS232 = _RS232;
     minRange_mm = _minRange_mm;
     maxRange_mm = _maxRange_mm;
+    
+    // Not sure if this will work
+    softSerial = new SoftwareSerial(RxPin, -1);
+
 }
 
 
