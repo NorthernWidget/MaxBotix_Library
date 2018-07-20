@@ -22,7 +22,7 @@ Maxbotix::Maxbotix()
 {
 }
 
-uint8_t Maxbotix::begin(uint8_t _RxPin, uint8_t _npings, bool _writeAll, \
+uint8_t Maxbotix::begin(uint8_t _RxPin, uint8_t _nPings, bool _writeAll, \
                         uint8_t _ExPin, bool _RS232, \
                         uint16_t _minRange_mm, uint16_t _maxRange_m)
 {
@@ -35,7 +35,7 @@ uint8_t Maxbotix::begin(uint8_t _RxPin, uint8_t _npings, bool _writeAll, \
    * data from a MaxBotix ultrasonic rangefinder. Initializes software serial 
    * based on _RxPin.
    *
-   * @param _RxPin Pin for SoftwareSerial receive at 1200 bps.
+   * @param _RxPin Pin for SoftwareSerial receive at 9600 bps.
    *
    * @param _npings Number of pings over which you average; each ping itself
    * includes ten short readings that the sensor internally processes.
@@ -66,7 +66,7 @@ uint8_t Maxbotix::begin(uint8_t _RxPin, uint8_t _npings, bool _writeAll, \
    */
 
     RxPin = _RxPin;
-    npings = _npings;
+    nPings = _nPings;
     writeAll = _writeAll;
     ExPin = _ExPin;
     RS232 = _RS232;
@@ -97,6 +97,35 @@ float Maxbotix::GetRange()  //will retrun distance to surface
    * Returns the result of a single range measurement
    *
    */
+  static uint16_t ranges[nPings];
+
+  softSerial.begin(9600);
+
+  char range[7]; // R####<\r>, so R + 4 chars + carriage return + null
+
+  // Remove junk from the serial line -- this may be a lot if there is no
+  // excitation applied
+  while Serial.available()
+  //Excite the sensor to produce a pulse, if you have selected to do so.
+  if (ExPin >= 0){
+    pinMode(Ex, OUTPUT);
+    digitalWrite(Ex, HIGH);
+    delay(1);
+    digitalWrite(Ex, LOW);
+  }
+//  delay(150); //Chad, do I need a 150ms delay needed to make sure low at end of sample to get unfiltered readings?
+  // Record the result of the ranging
+  int i=0; // counter
+  // Not sure if this will work - maybe loop around to the other end of the array?
+  while (range[i-1] != 13){
+    if (Serial.available()){
+      range[i] = Serial.read();
+      i++;
+    }
+  }
+
+
+  while 
   return 1701.0; //return dummy value until library is completed 
 }
 
@@ -291,3 +320,15 @@ int ALog::maxbotix_Serial_parse(uint8_t Ex){
   int r3 = atol(r2);
   return r3;
 }
+
+///////////////////////
+// PRIVATE FUNCTIONS //
+///////////////////////
+
+void serialBufferClear(){
+  while(Serial.available()) {
+    Serial.read();
+  }
+
+
+}   

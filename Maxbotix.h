@@ -26,7 +26,7 @@ Distributed as-is; no warranty is given.
 /////////////
 
 uint8_t RxPin; // need not be global
-uint8_t npings;
+uint8_t nPings;
 bool writeAll;
 uint8_t ExPin;
 bool RS232;
@@ -37,7 +37,7 @@ class Maxbotix
 {
 	public:
 		Maxbotix();
-		bool begin(uint8_t _RxPin, uint8_t _npings=1, bool _writeAll=false, \
+		bool begin(uint8_t _RxPin, uint8_t _nPings=1, bool _writeAll=false, \
                uint8_t _ExPin=-1, bool _RS232=false, \
                uint16_t _minRange_mm=500, uint16_t _maxRange_mm=5000);
 		float GetRange();
@@ -47,6 +47,7 @@ class Maxbotix
 
 	private:
     SoftwareSerial *softSerial;
+    void serialBufferClear();
 		
 };
 
