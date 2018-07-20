@@ -21,12 +21,27 @@ Distributed as-is; no warranty is given.
 
 #include "Arduino.h"
 
-class Maxbotics
+/////////////
+// GLOBALS //
+/////////////
+
+uint8_t RxPin;
+uint8_t npings;
+bool writeAll;
+uint8_t ExPin;
+bool RS232;
+uint16_t minRange_mm;
+uint16_t maxRange_mm;
+
+class Maxbotix
 {
 	public:
 		Maxbotix();
-		uint8_t begin(); //use default address
+		uint8_t begin(uint8_t RxPin, uint8_t npings=1, bool writeAll=false, \
+                  uint8_t ExPin=-1, bool RS232=false, \
+                  uint16_t minRange_mm=500, uint16_t maxRange_mm=5000);
 		float GetRange();
+		float GetRanges();
 		String GetHeader();
 		String GetString();
 
