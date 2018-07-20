@@ -64,7 +64,7 @@ uint8_t Maxbotix::begin(uint8_t _RxPin, uint8_t _nPings, bool _writeAll, \
    * ```
    *
    */
-
+    
     RxPin = _RxPin;
     nPings = _nPings;
     writeAll = _writeAll;
@@ -72,7 +72,7 @@ uint8_t Maxbotix::begin(uint8_t _RxPin, uint8_t _nPings, bool _writeAll, \
     RS232 = _RS232;
     minRange_mm = _minRange_mm;
     maxRange_mm = _maxRange_mm;
-    
+
     // Not sure if this will work
     softSerial = new SoftwareSerial(RxPin, -1);
     
@@ -87,25 +87,43 @@ uint8_t Maxbotix::begin(uint8_t _RxPin, uint8_t _nPings, bool _writeAll, \
 
 
 
-float Maxbotix::GetRange()  //will retrun distance to surface
+int16_t Maxbotix::GetRange()  //will retrun distance to surface
 {
   /**
    * @brief
    * Returns the result of a single range measurement
    *
    * @details
-   * Returns the result of a single range measurement
+   * Returns the result of a single range measurement.
+   * Communications error value = -9999
+   * Internal error value (including range too long) = 5000
+   * Range too short error value = 500
+   * This code makes these internal error values negative to more easily
+   * sort them out of the real results
    *
    */
   static uint16_t ranges[nPings];
 
   softSerial.begin(9600);
 
-  char range[7]; // R####<\r>, so R + 4 chars + carriage return + null
+  // Input range is in the format R####<\r>
+  // R + 4 chars + carriage return + null = 7
+  // I will accept only ASCII numeric values, so will shorten this to 5
+  // 4 chars between 48 and 57 (inclusive) + null
+  char range[5];
+  char _tmpchar;
+  bool success_flag = false;
+  int16_t rangeInt;
+  // counter
+  uint8_t i=0;
+  // Timeout: this should be long enough for 4 readings, and should be
+  // triggered iff something has gone really wrong
+  uint8_t timeout_millis = 20;
 
   // Remove junk from the serial line -- this may be a lot if there is no
-  // excitation applied
-  while Serial.available()
+  // excitation applied and power has been on for a while
+  serialBufferClear();
+
   //Excite the sensor to produce a pulse, if you have selected to do so.
   if (ExPin >= 0){
     pinMode(Ex, OUTPUT);
@@ -113,20 +131,43 @@ float Maxbotix::GetRange()  //will retrun distance to surface
     delay(1);
     digitalWrite(Ex, LOW);
   }
-//  delay(150); //Chad, do I need a 150ms delay needed to make sure low at end of sample to get unfiltered readings?
-  // Record the result of the ranging
-  int i=0; // counter
-  // Not sure if this will work - maybe loop around to the other end of the array?
-  while (range[i-1] != 13){
-    if (Serial.available()){
-      range[i] = Serial.read();
-      i++;
+  
+  // Get the 4 characters; if a carriage return is encountered, start fresh
+  // from the beginning.
+  // Time differences are unsigned; rollovers are a non-issue when differencing
+  uint32_t start_time = millis();
+  while ( (millis() - start_time) < timeout_millis ){
+    if Serial.available(){
+      _tmpchar = Serial.read();
+      // Test if ASCII number
+      if ( (_tmpchar >= 48) && (_tmpchar <= 57) ){
+        range[i] = _tmpchar;
+        i += 1;
+      }
+      else if (_tmpchar == 13){
+        i = 0; // reset to the start of a measurement
+      }
+    }
+    // Break if enough characters are recorded
+    if (i == 4){
+      success_flag = true;
+      break;
     }
   }
 
+  softSerial.end();
 
-  while 
-  return 1701.0; //return dummy value until library is completed 
+  // Double-check that the NULL will not cause a problem here
+  if (success_flag){
+     rangeInt = atoi(range);
+     // negative if an error value
+     if ( (rangeInt == 5000) || (rangeInt == 500) ) {
+        rangeInt *= -1
+     }
+  }
+  else{
+    return -9999; // hard-coded communications error value
+  }
 }
 
 String Maxbotix::GetHeader()
