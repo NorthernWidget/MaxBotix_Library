@@ -241,6 +241,15 @@ String Maxbotix::GetString(){
   return outstr;
 }
 
+///////////////////////
+// PRIVATE FUNCTIONS //
+///////////////////////
+
+void serialBufferClear(){
+  while(Serial.available()) {
+    Serial.read();
+  }
+
 int32_t Maxbotix::sum(int16_t values[], uint8_t nvalues, \
                        bool errorNegative){
   uint32_t _sum = 0;
@@ -274,149 +283,8 @@ float Maxbotix::standardDeviation(int16_t values[], uint8_t nvalues, \
     if ( (errorNegative == false) || (values[i] >= 0) ){
       sumsquares += square(values[i] - mean);
       nvalues_valid += 1.;
+    }
   }
   return sqrt(sumsquares/nvalues_valid);
 }
 
-float Maxbotix::maxbotixHRXL_WR_Serial(uint8_t Ex, uint8_t npings, bool writeAll, \
-            int maxRange, bool RS232){
-
-  int myranges[npings]; // Declare an array to store the ranges [mm] // Should be int, but float for passing to fcns
-  // Get nodata value - 5000 or 9999 based on logger max range (in meters)
-  // I have also made 0 a nodata value, because it appears sometimes and shouldn't
-  // (minimum range = 300 mm)
-  int nodata_value;
-  if (maxRange == 5){
-    nodata_value = 5000;
-  }
-  else if (maxRange == 10){
-    nodata_value = 9999;
-  }
-  // Put all of the range values in the array
-  for (int i=0; i<npings; i++){
-    // Must add int Rx to use this; currently, don't trust SoftwareSerial
-    // myranges[i] = maxbotix_soft_Serial_parse(Ex, Rx, RS232);
-    myranges[i] = maxbotix_Serial_parse(Ex);
-  }
-  // Then get the mean and standard deviation of all of the data
-  int npings_with_nodata_returns = 0;
-  unsigned long sum_of_good_ranges = 0;
-  int good_ranges[npings];
-  int j=0;
-  for (int i=0; i<npings; i++){
-    if (myranges[i] != nodata_value && myranges[i] != 0){
-      sum_of_good_ranges += myranges[i];
-      good_ranges[j] = myranges[i];
-      j++;
-    }
-    else{
-      npings_with_nodata_returns ++;
-    }
-  }
-  float npings_with_real_returns = npings - npings_with_nodata_returns;
-  float mean_range;
-  float standard_deviation;
-  // Avoid div0 errors
-  if (npings_with_real_returns > 0){
-    mean_range = sum_of_good_ranges / npings_with_real_returns;
-    standard_deviation = standard_deviation_from_array(good_ranges, npings_with_real_returns, mean_range);
-  }
-  else {
-    mean_range = -9999;
-    standard_deviation = -9999;
-  }
-  // Write all values if so desired
-  if (writeAll){
-    for (int i=0; i<npings; i++){
-      if (first_log_after_booting_up){
-        headerfile.print("Ultrasonic distance to surface [mm]");
-        headerfile.print(",");
-        headerfile.sync();
-      }
-      datafile.print(myranges[i]);
-      datafile.print(F(","));
-      // Echo to serial
-      Serial.print(myranges[i]);
-      Serial.print(F(","));
-    }
-
-  }
-
-  ///////////////
-  // SAVE DATA //
-  ///////////////
-
-  if (first_log_after_booting_up){
-    headerfile.print("Mean ultrasonic distance to surface [mm]");
-    headerfile.print(",");
-    headerfile.print("Standard deviation ultrasonic distance to surface [mm]");
-    headerfile.print(",");
-    headerfile.print("Number of readings with non-error returns");
-    headerfile.print(",");
-    headerfile.sync();
-  }
-
-  // Always write the mean, standard deviation, and number of good returns
-  datafile.print(mean_range);
-  datafile.print(F(","));
-  datafile.print(standard_deviation);
-  datafile.print(F(","));
-  datafile.print(npings_with_real_returns);
-  datafile.print(F(","));
-
-  // Echo to serial
-  Serial.print(mean_range);
-  Serial.print(F(","));
-  Serial.print(standard_deviation);
-  Serial.print(F(","));
-  Serial.print(npings_with_real_returns);
-  Serial.print(F(","));
-
-  // return mean range for functions that need it, e.g., to trigger camera
-  return mean_range;
-}
-
-
-int ALog::maxbotix_Serial_parse(uint8_t Ex){
-  // NOTE: Currently assumes only one Serial port.
-  // Excites the MaxBotix sensor and receives its ranging output
-  char range[7]; // R####<\r>, so R + 4 chars + carriage return + null
-  Serial.end(); // End 38400 bps computer comms
-  Serial.begin(9600); // Start 9600 bps logger comms
-  //Excite the sensor to produce a pulse
-  pinMode(Ex, OUTPUT);
-  digitalWrite(Ex, HIGH);
-  delay(1);
-  digitalWrite(Ex, LOW);
-//  delay(150); //Chad, do I need a 150ms delay needed to make sure low at end of sample to get unfiltered readings?
-  // Record the result of the ranging
-  int i=0; // counter
-  // Not sure if this will work - maybe loop around to the other end of the array?
-  while (range[i-1] != 13){
-    if (Serial.available()){
-      range[i] = Serial.read();
-      i++;
-    }
-  }
-  Serial.end();
-  Serial.begin(38400);
-  // Convert to integer
-  char r2[4]; // range stripped of all of its extra characters
-  for (int i=1; i<5; i++){
-    r2[i-1] = range[i];
-  }
-  int r3 = atol(r2);
-  return r3;
-}
-
-///////////////////////
-// PRIVATE FUNCTIONS //
-///////////////////////
-
-void serialBufferClear(){
-  while(Serial.available()) {
-    Serial.read();
-  }
-
-
-}   
