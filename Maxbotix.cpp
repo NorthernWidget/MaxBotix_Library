@@ -28,10 +28,11 @@ uint8_t Maxbotix::begin(uint8_t _RxPin, uint8_t _npings, bool _writeAll, \
 {
   /**
    * @brief
-   * Sets global variables required for a SoftwareSerial interface to record 
-   * data from a MaxBotix ultrasonic rangefinder.
+   * Sets globals.
    *
    * @details
+   * Sets global variables required for a SoftwareSerial interface to record 
+   * data from a MaxBotix ultrasonic rangefinder.
    *
    * @param _RxPin Pin for SoftwareSerial receive at 1200 bps.
    *
@@ -56,13 +57,21 @@ uint8_t Maxbotix::begin(uint8_t _RxPin, uint8_t _npings, bool _writeAll, \
    *
    * Example:
    * ```
-   * // Digital pin 7 controlling sensor excitation, averaging over 10 pings,
+   * // SoftwareSerial on , averaging over 10 pings,
    * // not recording the results of each ping, and with a maximum range of
    * // 5000 mm using standard TTL logic
    * alog.maxbotixHRXL_WR_Serial(7, 10, false, 5000, false);
    *
    * ```
    */
+
+    RxPin = _RxPin;
+    npings = _npings;
+    writeAll = _writeAll;
+    ExPin = _ExPin;
+    RS232 = _RS232;
+    minRange_mm = _minRange_mm;
+    maxRange_mm = _maxRange_mm;
 }
 
 
