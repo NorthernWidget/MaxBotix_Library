@@ -79,6 +79,7 @@ uint8_t Maxbotix::begin(uint8_t _RxPin, uint8_t _nPings, bool _writeAll, \
     // Test if npings is in the proper range
     if nPings == 0 {
       return false
+      nPings = 1
     }
     else {
       return true
@@ -91,7 +92,7 @@ int16_t Maxbotix::GetRange()  //will retrun distance to surface
 {
   /**
    * @brief
-   * Returns the result of a single range measurement
+   * Returns the result of a single range measurement -- now set for multiple?
    *
    * @details
    * Returns the result of a single range measurement.
@@ -185,7 +186,7 @@ String Maxbotix::GetHeader()
     return "Distace [mm]";
   }
   else if (npings == 0){
-    return "MAXBOTIX ERROR: SET NPINGS > 0";
+    return "MAXBOTIX ERROR: SET NPINGS > 0.";
   }
   else{
     String allPings = String("");
@@ -200,7 +201,7 @@ String Maxbotix::GetHeader()
   }
 }
 
-String Maxbotix::GetString()
+String Maxbotix::GetString(){
   /**
    * @brief
    * Returns the measurement result(s) as a String object
@@ -209,10 +210,73 @@ String Maxbotix::GetString()
    * Returns the measurement result(s) as a String object
    *
    */
-{
-  return String(GetRange()) + ",";  //Return range as string
+  String outstr;
+  if (nPings == 1){
+    outstr = String(GetRange()) + ",";  //Return range as string
+  }
+  else if (nPings == 0){
+    outstr = "NO PINGS REQUESTED,";
+  }
+  else{
+    outstr = "";
+    if writeAll{
+      for(int i=0; i<npings; i++)
+      {
+        outstr = String( outstr + String(ranges[i]) + "," ) ;
+      }
+    }
+    float _mean = mean(ranges, nPings);
+    float _SD = standardDeviation(ranges, nPings, _mean);
+    uint8_t _nerr = 0
+    for(int i=0; i<npings; i++)
+    {
+      if (ranges[i] < 0){
+        _nerr += 1;
+      }
+    }
+    outstr = String( outstr + String(_mean) + "," );
+    outstr = String( outstr + String(_SD) + "," );
+    outstr = String( outstr + String(_nerr));
+  }
+  return outstr;
 }
 
+int32_t Maxbotix::sum(int16_t values[], uint8_t nvalues, \
+                       bool errorNegative){
+  uint32_t _sum = 0;
+  for (int i=0; i<nvalues; i++){
+    if ( (errorNegative == false) || (values[i] >= 0) ){
+      _sum += values[i];
+    }
+  return _sum;
+
+float Maxbotix::mean(int16_t values[], uint8_t nvalues, \
+                     bool errorNegative){
+  uint32_t _sum = 0;
+  float nvalues_valid = 0.;
+  float mean;
+  for (int i=0; i<nvalues; i++){
+    if ( (errorNegative == false) || (values[i] >= 0) ){
+      _sum += values[i];
+      nvalues_valid += 1.;
+    }
+  }
+  // how to handle if nvalues_valid = 0? Will it throw an error?
+  mean = _sum/nvalues_valid;
+  return mean;
+}
+
+float Maxbotix::standardDeviation(int16_t values[], uint8_t nvalues, \
+                                  float mean, bool errorNegative){
+  float sumsquares = 0;
+  float nvalues_valid = 0.;
+  for (int i=0; i<nvalues; i++){
+    if ( (errorNegative == false) || (values[i] >= 0) ){
+      sumsquares += square(values[i] - mean);
+      nvalues_valid += 1.;
+  }
+  return sqrt(sumsquares/nvalues_valid);
+}
 
 float Maxbotix::maxbotixHRXL_WR_Serial(uint8_t Ex, uint8_t npings, bool writeAll, \
             int maxRange, bool RS232){
@@ -312,23 +376,6 @@ float Maxbotix::maxbotixHRXL_WR_Serial(uint8_t Ex, uint8_t npings, bool writeAll
   return mean_range;
 }
 
-float ALog::standard_deviation_from_array(float values[], int nvalues,
-            float mean){
-  float sumsquares = 0;
-  for (int i=0; i<nvalues; i++){
-    sumsquares += square(values[i] - mean);
-  }
-  return sqrt(sumsquares/nvalues);
-}
-
-float ALog::standard_deviation_from_array(int values[], int nvalues,
-            float mean){
-  float sumsquares = 0;
-  for (int i=0; i<nvalues; i++){
-    sumsquares += square(values[i] - mean);
-  }
-  return sqrt(sumsquares/nvalues);
-}
 
 int ALog::maxbotix_Serial_parse(uint8_t Ex){
   // NOTE: Currently assumes only one Serial port.

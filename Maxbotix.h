@@ -20,6 +20,7 @@ Distributed as-is; no warranty is given.
 #define MAXBOTIX_h
 
 #include "Arduino.h"
+#include <math.h>
 
 /////////////
 // GLOBALS //
@@ -32,7 +33,7 @@ uint8_t ExPin;
 bool RS232;
 uint16_t minRange_mm;
 uint16_t maxRange_mm;
-int16_t ErrorValue;
+// Define ranges here instead of in function, w/ pointer?
 
 class Maxbotix
 {
@@ -42,13 +43,16 @@ class Maxbotix
                uint8_t _ExPin=-1, bool _RS232=false, \
                uint16_t _minRange_mm=501, uint16_t _maxRange_mm=4999);
 		int16_t GetRange();
-		float GetRanges();
 		String GetHeader();
 		String GetString();
 
 	private:
     SoftwareSerial *softSerial;
     void serialBufferClear();
+    uint32_t sum(int16_t values[], uint8_t nvalues, bool errorNegative=true);
+    float mean(int16_t values[], uint8_t nvalues, bool errorNegative=true);
+    float standardDeviation(int16_t values[], uint8_t nvalues, float mean, \
+                            bool errorNegative=true);
 		
 };
 
