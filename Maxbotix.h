@@ -27,13 +27,8 @@ Distributed as-is; no warranty is given.
 // GLOBALS //
 /////////////
 
-uint8_t RxPin; // need not be global
-uint8_t nPings;
-bool writeAll;
-uint8_t ExPin;
-bool RS232;
-uint16_t minRange_mm;
-uint16_t maxRange_mm;
+
+
 // Define ranges here instead of in function, w/ pointer?
 
 class Maxbotix
@@ -48,7 +43,19 @@ class Maxbotix
 		String GetString();
 
 	private:
-    SoftwareSerial *softSerial;
+
+		uint8_t RxPin; // need not be global
+		uint8_t nPings;
+		bool writeAll;
+		uint8_t ExPin;
+		bool RS232;
+		uint16_t minRange_mm;
+		uint16_t maxRange_mm;
+
+		uint16_t ranges[10] = {0}; //Fix hard code! and global??
+		
+    SoftwareSerial *softSerial;  //Fix hardcode!
+		// extern SoftwareSerial softSerial;
     void serialBufferClear();
     int32_t sum(int16_t values[], uint8_t nvalues, bool errorNegative=true);
     float mean(int16_t values[], uint8_t nvalues, bool errorNegative=true);

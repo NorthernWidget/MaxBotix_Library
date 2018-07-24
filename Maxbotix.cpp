@@ -17,9 +17,13 @@ Distributed as-is; no warranty is given.
 ******************************************************************************/
 
 #include "Maxbotix.h"
+// #include <SoftwareSerial.h>
 
-Maxbotix::Maxbotix() 
+// SoftwareSerial softSerial(11, -1);  //Fix hardcode!
+
+Maxbotix::Maxbotix()
 {
+    // softSerial(11, -1);
 }
 
 bool Maxbotix::begin(uint8_t _RxPin, uint8_t _nPings, bool _writeAll, \
@@ -75,6 +79,7 @@ bool Maxbotix::begin(uint8_t _RxPin, uint8_t _nPings, bool _writeAll, \
 
     // Not sure if this will work
     softSerial = new SoftwareSerial(RxPin, -1);
+
     
     // Test if npings is in the proper range
     if(nPings == 0){
@@ -103,9 +108,9 @@ int16_t Maxbotix::GetRange()  //will retrun distance to surface
    * sort them out of the real results
    *
    */
-  static uint16_t ranges[nPings];
+  // static uint16_t ranges[nPings];
 
-  softSerial.begin(9600);
+  softSerial -> begin(9600);
 
   // Input range is in the format R####<\r>
   // R + 4 chars + carriage return + null = 7
@@ -156,7 +161,7 @@ int16_t Maxbotix::GetRange()  //will retrun distance to surface
     }
   }
 
-  softSerial.end();
+  softSerial -> end();
 
   // Double-check that the NULL will not cause a problem here
   if (success_flag){
