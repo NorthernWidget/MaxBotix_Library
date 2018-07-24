@@ -22,9 +22,9 @@ Maxbotix::Maxbotix()
 {
 }
 
-uint8_t Maxbotix::begin(uint8_t _RxPin, uint8_t _nPings, bool _writeAll, \
+bool Maxbotix::begin(uint8_t _RxPin, uint8_t _nPings, bool _writeAll, \
                         uint8_t _ExPin, bool _RS232, \
-                        uint16_t _minRange_mm, uint16_t _maxRange_m)
+                        uint16_t _minRange_mm, uint16_t _maxRange_mm)
 {
   /**
    * @brief
@@ -77,12 +77,12 @@ uint8_t Maxbotix::begin(uint8_t _RxPin, uint8_t _nPings, bool _writeAll, \
     softSerial = new SoftwareSerial(RxPin, -1);
     
     // Test if npings is in the proper range
-    if nPings == 0 {
-      return false
-      nPings = 1
+    if(nPings == 0){
+      return false;
+      nPings = 1;
     }
     else {
-      return true
+      return true;
     }
 }
 
@@ -126,11 +126,11 @@ int16_t Maxbotix::GetRange()  //will retrun distance to surface
   serialBufferClear();
 
   //Excite the sensor to produce a pulse, if you have selected to do so.
-  if (ExPin >= 0){
-    pinMode(Ex, OUTPUT);
-    digitalWrite(Ex, HIGH);
+  if (RxPin >= 0){
+    pinMode(RxPin, OUTPUT);
+    digitalWrite(RxPin, HIGH);
     delay(1);
-    digitalWrite(Ex, LOW);
+    digitalWrite(RxPin, LOW);
   }
   
   // Get the 4 characters; if a carriage return is encountered, start fresh
@@ -138,7 +138,7 @@ int16_t Maxbotix::GetRange()  //will retrun distance to surface
   // Time differences are unsigned; rollovers are a non-issue when differencing
   uint32_t start_time = millis();
   while ( (millis() - start_time) < timeout_millis ){
-    if Serial.available(){
+    if(Serial.available()){
       _tmpchar = Serial.read();
       // Test if ASCII number
       if ( (_tmpchar >= 48) && (_tmpchar <= 57) ){
@@ -163,7 +163,7 @@ int16_t Maxbotix::GetRange()  //will retrun distance to surface
      rangeInt = atoi(range);
      // negative if an error value
      if ( (rangeInt == 5000) || (rangeInt == 500) ) {
-        rangeInt *= -1
+        rangeInt *= -1;
      }
   }
   else{
@@ -182,16 +182,16 @@ String Maxbotix::GetHeader()
    * provided inputs (number of pings, recording all pings)
    *
    */
-  if (npings == 1){
+  if (nPings == 1){
     return "Distace [mm]";
   }
-  else if (npings == 0){
+  else if (nPings == 0){
     return "MAXBOTIX ERROR: SET NPINGS > 0.";
   }
   else{
     String allPings = String("");
-    if writeAll{
-      for(int i=0; i<npings; i++)
+    if(writeAll){
+      for(int i=0; i<nPings; i++)
       {
         allPings = String(allPings + "Distace [mm],");
       }
@@ -219,16 +219,16 @@ String Maxbotix::GetString(){
   }
   else{
     outstr = "";
-    if writeAll{
-      for(int i=0; i<npings; i++)
+    if(writeAll){
+      for(int i=0; i<nPings; i++)
       {
         outstr = String( outstr + String(ranges[i]) + "," ) ;
       }
     }
     float _mean = mean(ranges, nPings);
     float _SD = standardDeviation(ranges, nPings, _mean);
-    uint8_t _nerr = 0
-    for(int i=0; i<npings; i++)
+    uint8_t _nerr = 0;
+    for(int i=0; i<nPings; i++)
     {
       if (ranges[i] < 0){
         _nerr += 1;
@@ -245,10 +245,11 @@ String Maxbotix::GetString(){
 // PRIVATE FUNCTIONS //
 ///////////////////////
 
-void serialBufferClear(){
+void Maxbotix::serialBufferClear(){
   while(Serial.available()) {
     Serial.read();
   }
+}
 
 int32_t Maxbotix::sum(int16_t values[], uint8_t nvalues, \
                        bool errorNegative){
@@ -258,6 +259,8 @@ int32_t Maxbotix::sum(int16_t values[], uint8_t nvalues, \
       _sum += values[i];
     }
   return _sum;
+  }
+}
 
 float Maxbotix::mean(int16_t values[], uint8_t nvalues, \
                      bool errorNegative){

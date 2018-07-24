@@ -21,6 +21,7 @@ Distributed as-is; no warranty is given.
 
 #include "Arduino.h"
 #include <math.h>
+#include <SoftwareSerial.h>
 
 /////////////
 // GLOBALS //
@@ -49,6 +50,7 @@ class Maxbotix
 	private:
     SoftwareSerial *softSerial;
     void serialBufferClear();
+    int32_t sum(int16_t values[], uint8_t nvalues, bool errorNegative=true);
     float mean(int16_t values[], uint8_t nvalues, bool errorNegative=true);
     float standardDeviation(int16_t values[], uint8_t nvalues, float mean, \
                             bool errorNegative=true);
