@@ -21,9 +21,9 @@ Distributed as-is; no warranty is given.
 
 // SoftwareSerial softSerial(11, -1);  //Fix hardcode!
 
-Maxbotix::Maxbotix()
+Maxbotix::Maxbotix() : softSerial(11, 21)
 {
-    // softSerial(11, -1);
+    
 }
 
 bool Maxbotix::begin(uint8_t _RxPin, uint8_t _nPings, bool _writeAll, \
@@ -70,7 +70,8 @@ bool Maxbotix::begin(uint8_t _RxPin, uint8_t _nPings, bool _writeAll, \
    */
     
     RxPin = _RxPin;
-    nPings = _nPings;
+    // nPings = _nPings;
+    nPings = 1; //DEBUG!
     writeAll = _writeAll;
     ExPin = _ExPin;
     RS232 = _RS232;
@@ -78,18 +79,55 @@ bool Maxbotix::begin(uint8_t _RxPin, uint8_t _nPings, bool _writeAll, \
     maxRange_mm = _maxRange_mm;
 
     // Not sure if this will work
-    softSerial = new SoftwareSerial(RxPin, -1);
-
+    // softSerial = new SoftwareSerial(RxPin, 21);
     
     // Test if npings is in the proper range
     if(nPings == 0){
-      return false;
       nPings = 1;
+      return false;
     }
     else {
       return true;
     }
 }
+
+// bool Maxbotix::begin(uint8_t _RxPin)
+// {
+//   /**
+//    * @brief
+//    * Sets globals and initializes software serial
+//    *
+//    * @details
+//    * Sets global variables required for a SoftwareSerial interface to record 
+//    * data from a MaxBotix ultrasonic rangefinder. Initializes software serial 
+//    * based on _RxPin.
+//    *
+//    * @param _RxPin Pin for SoftwareSerial receive at 9600 bps.
+//    *
+//    * Example:
+//    * ```
+//    * // SoftwareSerial with RxPin 7, averaging over 10 pings, and otherwise
+//    * // using default settings
+//    * alog.maxbotixHRXL_WR_Serial(7, 10);
+//    * ```
+//    *
+//    */
+    
+//     RxPin = _RxPin;
+//     nPings = 1; //DEBUG!
+
+//     // Not sure if this will work
+//     softSerial = new SoftwareSerial(RxPin, 21);
+    
+//     // Test if npings is in the proper range
+//     if(nPings == 0){
+//       nPings = 1;
+//       return false;
+//     }
+//     else {
+//       return true;
+//     }
+// }
 
 
 
@@ -109,8 +147,8 @@ int16_t Maxbotix::GetRange()  //will retrun distance to surface
    *
    */
   // static uint16_t ranges[nPings];
-
-  softSerial -> begin(9600);
+  // pinMode(RxPin, INPUT);
+  softSerial.begin(9600);
 
   // Input range is in the format R####<\r>
   // R + 4 chars + carriage return + null = 7
@@ -124,52 +162,69 @@ int16_t Maxbotix::GetRange()  //will retrun distance to surface
   uint8_t i=0;
   // Timeout: this should be long enough for 4 readings, and should be
   // triggered iff something has gone really wrong
-  uint8_t timeout_millis = 20;
+  //Fix?? Needs to be unisgned long due to size comparison? 
+  unsigned long timeout = 20; //Message transmit time
+  unsigned long wait = 200; //Up to ~125ms between transmissions
 
   // Remove junk from the serial line -- this may be a lot if there is no
   // excitation applied and power has been on for a while
   serialBufferClear();
 
   //Excite the sensor to produce a pulse, if you have selected to do so.
-  if (RxPin >= 0){
-    pinMode(RxPin, OUTPUT);
-    digitalWrite(RxPin, HIGH);
+  if (ExPin >= 0){
+    pinMode(ExPin, OUTPUT);
+    digitalWrite(ExPin, HIGH);
     delay(1);
-    digitalWrite(RxPin, LOW);
+    digitalWrite(ExPin, LOW);
   }
   
   // Get the 4 characters; if a carriage return is encountered, start fresh
   // from the beginning.
   // Time differences are unsigned; rollovers are a non-issue when differencing
   uint32_t start_time = millis();
-  while ( (millis() - start_time) < timeout_millis ){
-    if(Serial.available()){
-      _tmpchar = Serial.read();
-      // Test if ASCII number
-      if ( (_tmpchar >= 48) && (_tmpchar <= 57) ){
-        range[i] = _tmpchar;
-        i += 1;
+
+  while ( (millis() - start_time) < wait && _tmpchar != 'R'){
+    _tmpchar = softSerial.read();
+  }
+  if(_tmpchar == 'R') {
+    start_time = millis();
+    while ( (millis() - start_time) < timeout ){ //DEBUG!
+      if(softSerial.available()){
+        //Fix, Wait for 'R'
+        _tmpchar = softSerial.read();
+        // Serial.println(_tmpchar); //DEBUG!
+        // Test if ASCII number
+        if ( (_tmpchar >= 48) && (_tmpchar <= 57) ){
+          // Serial.print(" Valid"); //DEBUG!
+          range[i] = _tmpchar;
+          i += 1;
+        }
+        else if (_tmpchar == 13){
+          // Serial.print(" Reset"); //DEBUG!
+          i = 0; // reset to the start of a measurement
+        }
       }
-      else if (_tmpchar == 13){
-        i = 0; // reset to the start of a measurement
+      // Break if enough characters are recorded
+      // Serial.print("i = "); Serial.println(i); //DEBUG!
+      if (i == 4){
+        success_flag = true;
+        break; 
       }
-    }
-    // Break if enough characters are recorded
-    if (i == 4){
-      success_flag = true;
-      break;
     }
   }
 
-  softSerial -> end();
+  // softSerial.end(); //DEBUG!
 
   // Double-check that the NULL will not cause a problem here
   if (success_flag){
+    // Serial.println("BANG!");
      rangeInt = atoi(range);
      // negative if an error value
      if ( (rangeInt == 5000) || (rangeInt == 500) ) {
         rangeInt *= -1;
      }
+    // Serial.println(rangeInt);//DEBUG!
+    return rangeInt;
   }
   else{
     return -9999; // hard-coded communications error value
@@ -188,7 +243,7 @@ String Maxbotix::GetHeader()
    *
    */
   if (nPings == 1){
-    return "Distace [mm]";
+    return "Distace [mm], ";
   }
   else if (nPings == 0){
     return "MAXBOTIX ERROR: SET NPINGS > 0.";
@@ -198,11 +253,11 @@ String Maxbotix::GetHeader()
     if(writeAll){
       for(int i=0; i<nPings; i++)
       {
-        allPings = String(allPings + "Distace [mm],");
+        allPings = String(allPings + "Distace [mm], ");
       }
     }
     return String(allPings + \
-                  "Mean Distace [mm],StDev Distance [mm],Error Count");
+                  "Mean Distace [mm], StDev Distance [mm], Error Count, ");
   }
 }
 
@@ -251,8 +306,8 @@ String Maxbotix::GetString(){
 ///////////////////////
 
 void Maxbotix::serialBufferClear(){
-  while(Serial.available()) {
-    Serial.read();
+  while(softSerial.available()) {
+    softSerial.read();
   }
 }
 
