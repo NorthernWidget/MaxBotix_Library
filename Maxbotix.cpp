@@ -21,7 +21,7 @@ Distributed as-is; no warranty is given.
 
 // SoftwareSerial softSerial(11, -1);  //Fix hardcode!
 
-Maxbotix::Maxbotix() : softSerial(11, 21)
+Maxbotix::Maxbotix() : softSerial(11, -1)
 {
     
 }
@@ -80,7 +80,7 @@ bool Maxbotix::begin(uint8_t _RxPin, uint8_t _nPings, bool _writeAll, \
 
     // Not sure if this will work
     // softSerial = new SoftwareSerial(RxPin, 21);
-    
+
     // Test if npings is in the proper range
     if(nPings == 0){
       nPings = 1;
@@ -148,6 +148,7 @@ int16_t Maxbotix::GetRange()  //will retrun distance to surface
    */
   // static uint16_t ranges[nPings];
   // pinMode(RxPin, INPUT);
+  // Serial.println("START"); //DEBUG!
   softSerial.begin(9600);
 
   // Input range is in the format R####<\r>
@@ -181,6 +182,7 @@ int16_t Maxbotix::GetRange()  //will retrun distance to surface
   // Get the 4 characters; if a carriage return is encountered, start fresh
   // from the beginning.
   // Time differences are unsigned; rollovers are a non-issue when differencing
+
   uint32_t start_time = millis();
 
   while ( (millis() - start_time) < wait && _tmpchar != 'R'){
@@ -212,8 +214,8 @@ int16_t Maxbotix::GetRange()  //will retrun distance to surface
       }
     }
   }
-
-  // softSerial.end(); //DEBUG!
+  // Serial.println("END!"); //DEBUG!
+  softSerial.end(); //DEBUG!
 
   // Double-check that the NULL will not cause a problem here
   if (success_flag){
