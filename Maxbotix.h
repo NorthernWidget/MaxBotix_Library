@@ -1,12 +1,12 @@
 /******************************************************************************
-Maxbotics.h
-Library for interfacing with Maxbotics rangefinders for use with enviromental sensing
+Maxbotix.h
+Library for interfacing with Maxbotix rangefinders for use with enviromental sensing
 Bobby Schulz @ Northern Widget LLC
 Andy Wickert @ Northern Widget LLC
 7/16/2018
-https://github.com/NorthernWidget-Skunkworks/Maxbotics_Library
+https://github.com/NorthernWidget-Skunkworks/Maxbotix_Library
 
-This script is used to interface to the Maxbotics sensors and return distance to target, along with other
+This script is used to interface to the Maxbotix sensors and return distance to target, along with other
 statistics
 
 Boss: "I just heard that light travels faster than sound. I'm wondering if I should shout when I speak, just so my lips appear to sync-up with my words.""
