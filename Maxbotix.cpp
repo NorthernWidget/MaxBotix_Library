@@ -19,16 +19,13 @@ Distributed as-is; no warranty is given.
 #include "Maxbotix.h"
 // #include <SoftwareSerial.h>
 
-// SoftwareSerial softSerial(11, -1);  //Fix hardcode!
-
-Maxbotix::Maxbotix() : softSerial(11, -1)
+Maxbotix::Maxbotix(uint8_t DataPin) : softSerial(DataPin, -1)  //Pass data pin into external initializer 
 {
-    
+  // RxPin = DataPin; 
 }
 
-bool Maxbotix::begin(uint8_t _RxPin, uint8_t _nPings, bool _writeAll, \
-                        uint8_t _ExPin, bool _RS232, \
-                        uint16_t _minRange_mm, uint16_t _maxRange_mm)
+bool Maxbotix::begin(uint8_t _nPings, bool _writeAll, \
+                        uint8_t _ExPin)
 {
   /**
    * @brief
@@ -68,15 +65,12 @@ bool Maxbotix::begin(uint8_t _RxPin, uint8_t _nPings, bool _writeAll, \
    * ```
    *
    */
-    
-    RxPin = _RxPin;
+    // Serial.println(RxPin); //DEBUG!
+    // RxPin = _RxPin;
     // nPings = _nPings;
     nPings = 1; //DEBUG!
     writeAll = _writeAll;
     ExPin = _ExPin;
-    RS232 = _RS232;
-    minRange_mm = _minRange_mm;
-    maxRange_mm = _maxRange_mm;
 
     // Not sure if this will work
     // softSerial = new SoftwareSerial(RxPin, 21);
@@ -156,7 +150,7 @@ int16_t Maxbotix::GetRange()  //will retrun distance to surface
   // I will accept only ASCII numeric values, so will shorten this to 5
   // 4 chars between 48 and 57 (inclusive) + null
   char range[5];
-  char _tmpchar;
+  char _tmpchar = NULL;
   bool success_flag = false;
   int16_t rangeInt;
   // counter
@@ -164,7 +158,7 @@ int16_t Maxbotix::GetRange()  //will retrun distance to surface
   // Timeout: this should be long enough for 4 readings, and should be
   // triggered iff something has gone really wrong
   //Fix?? Needs to be unisgned long due to size comparison? 
-  unsigned long timeout = 20; //Message transmit time
+  unsigned long timeout = 20; //Message transmit time  //DEBUG! Initally 20ms
   unsigned long wait = 200; //Up to ~125ms between transmissions
 
   // Remove junk from the serial line -- this may be a lot if there is no
@@ -172,12 +166,12 @@ int16_t Maxbotix::GetRange()  //will retrun distance to surface
   serialBufferClear();
 
   //Excite the sensor to produce a pulse, if you have selected to do so.
-  if (ExPin >= 0){
-    pinMode(ExPin, OUTPUT);
-    digitalWrite(ExPin, HIGH);
-    delay(1);
-    digitalWrite(ExPin, LOW);
-  }
+  // if (ExPin >= 0){
+  //   pinMode(ExPin, OUTPUT);
+  //   digitalWrite(ExPin, HIGH);
+  //   delay(1);
+  //   digitalWrite(ExPin, LOW);
+  // }
   
   // Get the 4 characters; if a carriage return is encountered, start fresh
   // from the beginning.
@@ -187,11 +181,14 @@ int16_t Maxbotix::GetRange()  //will retrun distance to surface
 
   while ( (millis() - start_time) < wait && _tmpchar != 'R'){
     _tmpchar = softSerial.read();
+    // Serial.println(_tmpchar); //DEBUG!
   }
   if(_tmpchar == 'R') {
+    // Serial.println("BANG!"); //DEBUG!
     start_time = millis();
-    while ( (millis() - start_time) < timeout ){ //DEBUG!
+    while ( (millis() - start_time) < timeout && !success_flag){ //DEBUG!
       if(softSerial.available()){
+        // Serial.println("BANG1!"); //DEBUG!
         //Fix, Wait for 'R'
         _tmpchar = softSerial.read();
         // Serial.println(_tmpchar); //DEBUG!
@@ -210,7 +207,7 @@ int16_t Maxbotix::GetRange()  //will retrun distance to surface
       // Serial.print("i = "); Serial.println(i); //DEBUG!
       if (i == 4){
         success_flag = true;
-        break; 
+        // break; //DEBUG!
       }
     }
   }
@@ -313,7 +310,7 @@ void Maxbotix::serialBufferClear(){
   }
 }
 
-int32_t Maxbotix::sum(int16_t values[], uint8_t nvalues, \
+int32_t Maxbotix::sum(uint16_t values[], uint8_t nvalues, \
                        bool errorNegative){
   uint32_t _sum = 0;
   for (int i=0; i<nvalues; i++){
@@ -324,7 +321,7 @@ int32_t Maxbotix::sum(int16_t values[], uint8_t nvalues, \
   }
 }
 
-float Maxbotix::mean(int16_t values[], uint8_t nvalues, \
+float Maxbotix::mean(uint16_t values[], uint8_t nvalues, \
                      bool errorNegative){
   uint32_t _sum = 0;
   float nvalues_valid = 0.;
@@ -340,7 +337,7 @@ float Maxbotix::mean(int16_t values[], uint8_t nvalues, \
   return mean;
 }
 
-float Maxbotix::standardDeviation(int16_t values[], uint8_t nvalues, \
+float Maxbotix::standardDeviation(uint16_t values[], uint8_t nvalues, \
                                   float mean, bool errorNegative){
   float sumsquares = 0;
   float nvalues_valid = 0.;

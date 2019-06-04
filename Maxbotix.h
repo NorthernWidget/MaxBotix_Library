@@ -34,33 +34,27 @@ Distributed as-is; no warranty is given.
 class Maxbotix
 {
 	public:
-		Maxbotix();
-		bool begin(uint8_t _RxPin, uint8_t _nPings=1, bool _writeAll=false, \
-               uint8_t _ExPin=-1, bool _RS232=false, \
-               uint16_t _minRange_mm=501, uint16_t _maxRange_mm=4999);
+		Maxbotix(uint8_t DataPin = -1);
+		bool begin(uint8_t _nPings=1, bool _writeAll=false, \
+               uint8_t _ExPin=-1);
 		// bool begin(uint8_t _RxPin);
 		int16_t GetRange();
 		String GetHeader();
 		String GetString();
 
 	private:
-
-		uint8_t RxPin; // need not be global
 		uint8_t nPings = 1; //Fix??
 		bool writeAll;
 		uint8_t ExPin;
-		bool RS232;
-		uint16_t minRange_mm;
-		uint16_t maxRange_mm;
 
 		uint16_t ranges[10] = {0}; //Fix hard code! and global??
 
     SoftwareSerial softSerial;  //Fix hardcode!
 		// extern SoftwareSerial softSerial;
     void serialBufferClear();
-    int32_t sum(int16_t values[], uint8_t nvalues, bool errorNegative=true);
-    float mean(int16_t values[], uint8_t nvalues, bool errorNegative=true);
-    float standardDeviation(int16_t values[], uint8_t nvalues, float mean, \
+    int32_t sum(uint16_t values[], uint8_t nvalues, bool errorNegative=true);
+    float mean(uint16_t values[], uint8_t nvalues, bool errorNegative=true);
+    float standardDeviation(uint16_t values[], uint8_t nvalues, float mean, \
                             bool errorNegative=true);
 		
 };
