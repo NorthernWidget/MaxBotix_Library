@@ -242,7 +242,7 @@ String Maxbotix::GetHeader()
    *
    */
   if (nPings == 1){
-    return "Distace [mm], ";
+    return "Distance [mm], ";
   }
   else if (nPings == 0){
     return "MAXBOTIX ERROR: SET NPINGS > 0.";
