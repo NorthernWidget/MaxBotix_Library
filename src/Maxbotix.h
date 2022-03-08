@@ -32,9 +32,9 @@ Distributed as-is; no warranty is given.
 // Define ranges here instead of in function, w/ pointer?
 
 /**
- * @class Maxbotix class for ultrasonic rangefinders
- * @brief Arduino library to enable communication with MaxBotix ultrasonic
- * rangefinders using a software serial implementation.
+ * @class Maxbotix
+ * @brief Arduino library to enable control and communication with MaxBotix 
+ * ultrasonic rangefinders using a software serial implementation.
  * @details This Arduino library will enable the microcontroller to control and
  * read output from a MaxBotix ultrasonic rangefinder. It works using
  * software serial, and is not programmed to interface wtih the pulse-width
