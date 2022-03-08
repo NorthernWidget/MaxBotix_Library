@@ -40,7 +40,9 @@ Distributed as-is; no warranty is given.
  * software serial, and is not programmed to interface wtih the pulse-width
  * or analog-voltage outputs of the Maxbotix rangefinder. It can average
  * multiple measurements to obtain a more robust distance to its target.
- */
+ *
+ *  * \verbatim [![DOI](https://zenodo.org/badge/141178473.svg)](https://zenodo.org/badge/latestdoi/141178473) \endverbatim
+*/
 class Maxbotix
 {
 	public:
