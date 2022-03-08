@@ -85,46 +85,6 @@ bool Maxbotix::begin(uint8_t _nPings, bool _writeAll, \
     }
 }
 
-// bool Maxbotix::begin(uint8_t _RxPin)
-// {
-//   /**
-//    * @brief
-//    * Sets globals and initializes software serial
-//    *
-//    * @details
-//    * Sets global variables required for a SoftwareSerial interface to record
-//    * data from a MaxBotix ultrasonic rangefinder. Initializes software serial
-//    * based on _RxPin.
-//    *
-//    * @param _RxPin Pin for SoftwareSerial receive at 9600 bps.
-//    *
-//    * Example:
-//    * ```
-//    * // SoftwareSerial with RxPin 7, averaging over 10 pings, and otherwise
-//    * // using default settings
-//    * alog.maxbotixHRXL_WR_Serial(7, 10);
-//    * ```
-//    *
-//    */
-
-//     RxPin = _RxPin;
-//     nPings = 1; //DEBUG!
-
-//     // Not sure if this will work
-//     softSerial = new SoftwareSerial(RxPin, 21);
-
-//     // Test if npings is in the proper range
-//     if(nPings == 0){
-//       nPings = 1;
-//       return false;
-//     }
-//     else {
-//       return true;
-//     }
-// }
-
-
-
 int16_t Maxbotix::getRange()  //will retrun distance to surface
 {
   /**
