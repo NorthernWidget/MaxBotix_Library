@@ -27,44 +27,6 @@ Maxbotix::Maxbotix(uint8_t DataPin) : softSerial(DataPin, -1)  //Pass data pin i
 bool Maxbotix::begin(uint8_t _nPings, bool _writeAll, \
                         uint8_t _ExPin)
 {
-  /**
-   * @brief
-   * Sets globals and initializes software serial
-   *
-   * @details
-   * Sets global variables required for a SoftwareSerial interface to record
-   * data from a MaxBotix ultrasonic rangefinder. Initializes software serial
-   * based on _RxPin.
-   *
-   * @param _RxPin Pin for SoftwareSerial receive at 9600 bps.
-   *
-   * @param _npings Number of pings over which you average; each ping itself
-   * includes ten short readings that the sensor internally processes.
-   * Must be > 0, obviously, and <= 255. Defaults to "1"
-   *
-   * @param _writeAll will write each reading of the sensor (each ping)
-   * to the serial monitor and SD card. This is relevant only if npings > 1
-   *
-   * @param _ExPin Excitation pin that turns the sensor on; defaults to "-1",
-   * assuming that the sensor is either always on or is being switched via
-   * its main power supply.
-   *
-   * @param _RS232 defaults false for standard (TTL) logic; true for inverse
-   * (RS232-style) logic. It works at standard logger voltages: this is not
-   *  true RS232, but this is what MaxBotix calls it.
-   *
-   * @param _minRange_mm Minimum sensor range in mm; defaults to 501
-   *
-   * @param _maxRange_mm Maximum sensor range in mm; defaults to 4999
-   *
-   * Example:
-   * ```
-   * // SoftwareSerial with RxPin 7, averaging over 10 pings, and otherwise
-   * // using default settings
-   * alog.maxbotixHRXL_WR_Serial(7, 10);
-   * ```
-   *
-   */
     // Serial.println(RxPin); //DEBUG!
     // RxPin = _RxPin;
     // nPings = _nPings;
@@ -87,19 +49,6 @@ bool Maxbotix::begin(uint8_t _nPings, bool _writeAll, \
 
 int16_t Maxbotix::getRange()  //will retrun distance to surface
 {
-  /**
-   * @brief
-   * Returns the result of a single range measurement -- now set for multiple?
-   *
-   * @details
-   * Returns the result of a single range measurement.
-   * Communications error value = -9999
-   * Internal error value (including range too long) = 5000
-   * Range too short error value = 500
-   * This code makes these internal error values negative to more easily
-   * sort them out of the real results
-   *
-   */
   // static uint16_t ranges[nPings];
   // pinMode(RxPin, INPUT);
   // Serial.println("START"); //DEBUG!
@@ -198,15 +147,6 @@ int16_t Maxbotix::GetRange()
 
 String Maxbotix::getHeader()
 {
-  /**
-   * @brief
-   * Creates the appropritae header for the data file
-   *
-   * @details
-   * Creates the appropritae header for the data file, based on
-   * provided inputs (number of pings, recording all pings)
-   *
-   */
   if (nPings == 1){
     return "Distance [mm], ";
   }
@@ -234,14 +174,6 @@ String Maxbotix::GetHeader()
 
 String Maxbotix::getString()
 {
-  /**
-   * @brief
-   * Returns the measurement result(s) as a String object
-   *
-   * @details
-   * Returns the measurement result(s) as a String object
-   *
-   */
   String outstr;
   if (nPings == 1){
     outstr = String(GetRange()) + ",";  //Return range as string
