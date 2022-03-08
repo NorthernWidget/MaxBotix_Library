@@ -19,9 +19,9 @@ Distributed as-is; no warranty is given.
 #include "Maxbotix.h"
 // #include <SoftwareSerial.h>
 
-Maxbotix::Maxbotix(uint8_t DataPin) : softSerial(DataPin, -1)  //Pass data pin into external initializer 
+Maxbotix::Maxbotix(uint8_t DataPin) : softSerial(DataPin, -1)  //Pass data pin into external initializer
 {
-  // RxPin = DataPin; 
+  // RxPin = DataPin;
 }
 
 bool Maxbotix::begin(uint8_t _nPings, bool _writeAll, \
@@ -32,8 +32,8 @@ bool Maxbotix::begin(uint8_t _nPings, bool _writeAll, \
    * Sets globals and initializes software serial
    *
    * @details
-   * Sets global variables required for a SoftwareSerial interface to record 
-   * data from a MaxBotix ultrasonic rangefinder. Initializes software serial 
+   * Sets global variables required for a SoftwareSerial interface to record
+   * data from a MaxBotix ultrasonic rangefinder. Initializes software serial
    * based on _RxPin.
    *
    * @param _RxPin Pin for SoftwareSerial receive at 9600 bps.
@@ -92,8 +92,8 @@ bool Maxbotix::begin(uint8_t _nPings, bool _writeAll, \
 //    * Sets globals and initializes software serial
 //    *
 //    * @details
-//    * Sets global variables required for a SoftwareSerial interface to record 
-//    * data from a MaxBotix ultrasonic rangefinder. Initializes software serial 
+//    * Sets global variables required for a SoftwareSerial interface to record
+//    * data from a MaxBotix ultrasonic rangefinder. Initializes software serial
 //    * based on _RxPin.
 //    *
 //    * @param _RxPin Pin for SoftwareSerial receive at 9600 bps.
@@ -106,13 +106,13 @@ bool Maxbotix::begin(uint8_t _nPings, bool _writeAll, \
 //    * ```
 //    *
 //    */
-    
+
 //     RxPin = _RxPin;
 //     nPings = 1; //DEBUG!
 
 //     // Not sure if this will work
 //     softSerial = new SoftwareSerial(RxPin, 21);
-    
+
 //     // Test if npings is in the proper range
 //     if(nPings == 0){
 //       nPings = 1;
@@ -125,7 +125,7 @@ bool Maxbotix::begin(uint8_t _nPings, bool _writeAll, \
 
 
 
-int16_t Maxbotix::GetRange()  //will retrun distance to surface
+int16_t Maxbotix::getRange()  //will retrun distance to surface
 {
   /**
    * @brief
@@ -157,7 +157,7 @@ int16_t Maxbotix::GetRange()  //will retrun distance to surface
   uint8_t i=0;
   // Timeout: this should be long enough for 4 readings, and should be
   // triggered iff something has gone really wrong
-  //Fix?? Needs to be unisgned long due to size comparison? 
+  //Fix?? Needs to be unisgned long due to size comparison?
   unsigned long timeout = 20; //Message transmit time  //DEBUG! Initally 20ms
   unsigned long wait = 200; //Up to ~125ms between transmissions
 
@@ -172,7 +172,7 @@ int16_t Maxbotix::GetRange()  //will retrun distance to surface
   //   delay(1);
   //   digitalWrite(ExPin, LOW);
   // }
-  
+
   // Get the 4 characters; if a carriage return is encountered, start fresh
   // from the beginning.
   // Time differences are unsigned; rollovers are a non-issue when differencing
@@ -230,7 +230,13 @@ int16_t Maxbotix::GetRange()  //will retrun distance to surface
   }
 }
 
-String Maxbotix::GetHeader()
+// Backwards compatibility: capital case
+int16_t Maxbotix::GetRange()
+{
+  return getRange();
+}
+
+String Maxbotix::getHeader()
 {
   /**
    * @brief
@@ -260,7 +266,14 @@ String Maxbotix::GetHeader()
   }
 }
 
-String Maxbotix::GetString(){
+// Backwards compatibility: capital case
+String Maxbotix::GetHeader()
+{
+  return getHeader();
+}
+
+String Maxbotix::getString()
+{
   /**
    * @brief
    * Returns the measurement result(s) as a String object
@@ -298,6 +311,12 @@ String Maxbotix::GetString(){
     outstr = String( outstr + String(_nerr));
   }
   return outstr;
+}
+
+// Backwards compatibility: capital case
+String Maxbotix::GetString()
+{
+  return getString();
 }
 
 ///////////////////////
@@ -349,4 +368,3 @@ float Maxbotix::standardDeviation(uint16_t values[], uint8_t nvalues, \
   }
   return sqrt(sumsquares/nvalues_valid);
 }
-

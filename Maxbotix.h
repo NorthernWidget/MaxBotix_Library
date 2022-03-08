@@ -38,6 +38,10 @@ class Maxbotix
 		bool begin(uint8_t _nPings=1, bool _writeAll=false, \
                uint8_t _ExPin=-1);
 		// bool begin(uint8_t _RxPin);
+		int16_t getRange();
+		String getHeader();
+		String getString();
+    // Included for backwards compatibility
 		int16_t GetRange();
 		String GetHeader();
 		String GetString();
@@ -56,7 +60,7 @@ class Maxbotix
     float mean(uint16_t values[], uint8_t nvalues, bool errorNegative=true);
     float standardDeviation(uint16_t values[], uint8_t nvalues, float mean, \
                             bool errorNegative=true);
-		
+
 };
 
 #endif
