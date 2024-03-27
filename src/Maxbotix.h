@@ -21,7 +21,7 @@ Distributed as-is; no warranty is given.
 
 #include "Arduino.h"
 #include <math.h>
-#include <SoftwareSerial.h>
+#include <AltSoftSerial.h>
 
 /////////////
 // GLOBALS //
@@ -150,7 +150,7 @@ class Maxbotix
 
 		uint16_t ranges[10] = {0}; //Fix hard code! and global??
 
-    SoftwareSerial softSerial;  //Fix hardcode!
+    AltSoftSerial softSerial;  //Fix hardcode!
 		// extern SoftwareSerial softSerial;
     void serialBufferClear();
     int32_t sum(uint16_t values[], uint8_t nvalues, bool errorNegative=true);
