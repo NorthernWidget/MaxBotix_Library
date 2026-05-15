@@ -12,6 +12,12 @@ This Arduino library will enable the microcontroller to control and read output 
 
 * [![DOI](https://zenodo.org/badge/141178473.svg)](https://zenodo.org/badge/latestdoi/141178473)
 
+## Citation
+
+If you use this library in a publication, please cite:
+
+**Wickert, A. D., K. R. Barnhart, W. H. Armstrong, M. Romero, B. Schulz, G.-H. C. Ng, C. T. Sandell, J. La Frenierre, S. B. Penprase, M. Van Wyk de Vries, and K. R. MacGregor (2024), [Automated ablation stakes to constrain temperature-index melt models](https://doi.org/10.1017/aog.2024.21), *Ann. Glaciol.*, *64*(92), 425–438, doi:10.1017/aog.2024.21.**
+
 ## Summary
 
  Members                        | Descriptions                                
