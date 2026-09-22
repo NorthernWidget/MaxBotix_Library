@@ -1,0 +1,577 @@
+
+
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.28.1 by Michael Rose
+  Copyright 2013-2026 Michael Rose - mademistakes.com | @mmistakes
+  Copyright 2024-2026 iBug - ibugone.com | @iBug
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en" class="no-js" dir="ltr">
+  <head>
+    
+<meta charset="utf-8">
+
+
+<!-- begin _includes/seo.html --><title>src/Maxbotix.cpp - MaxBotix Library</title>
+<meta name="description" content="Library for MaxBotix ultrasonic rangefinders">
+
+
+  <meta name="author" content="Northern Widget">
+  
+
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="MaxBotix Library">
+<meta property="og:title" content="src/Maxbotix.cpp">
+<meta property="og:url" content="https://docs.northernwidget.com/MaxBotix_Library/Files/Maxbotix_8cpp/">
+
+
+  <meta property="og:description" content="Library for MaxBotix ultrasonic rangefinders">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="canonical" href="https://docs.northernwidget.com/MaxBotix_Library/Files/Maxbotix_8cpp/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/MaxBotix_Library/feed.xml" type="application/atom+xml" rel="alternate" title="MaxBotix Library Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/MaxBotix_Library/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    
+<nav class="skip-links" aria-label="Skip links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav" aria-label="Primary navigation">
+        
+        <a class="site-title" href="/MaxBotix_Library/">
+          MaxBotix Library
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/"
+                
+                
+              >Quick-Start Guide</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+
+
+<div id="main" role="main">
+  
+
+  <div class="sidebar sticky">
+  
+  
+    
+      
+      
+      
+      
+    
+    
+      
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      
+      
+        <li>
+          
+            <a href="/MaxBotix_Library/"><span class="nav__sub-title">Overview</span></a>
+          
+
+          
+        </li>
+      
+        <li>
+          
+            <a href="/MaxBotix_Library/Classes/classMaxbotix/"><span class="nav__sub-title">Maxbotix Class</span></a>
+          
+
+          
+        </li>
+      
+        <li>
+          
+            <a href="/MaxBotix_Library/Classes/index_classes/"><span class="nav__sub-title">Classes</span></a>
+          
+
+          
+        </li>
+      
+        <li>
+          
+            <a href="/MaxBotix_Library/Files/index_files/"><span class="nav__sub-title">Files</span></a>
+          
+
+          
+        </li>
+      
+    
+  </ul>
+</nav>
+
+    
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="src/Maxbotix.cpp">
+    
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="https://docs.northernwidget.com/MaxBotix_Library/Files/Maxbotix_8cpp/" itemprop="url">src/Maxbotix.cpp
+</a>
+          </h1>
+          
+
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc" aria-label="Table of contents">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#source-code">Source code</a></li></ul>
+            </nav>
+          </aside>
+        
+        <h2 id="source-code">Source code</h2>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/******************************************************************************
+Maxbotix.cpp
+Library for interfacing with Maxbotix rangefinders for use with enviromental sensing
+Bobby Schulz @ Northern Widget LLC
+Andy Wickert @ Northern Widget LLC
+7/16/2018
+https://github.com/NorthernWidget-Skunkworks/Maxbotix_Library
+
+This script is used to interface to the Maxbotix sensors and return distance to target, along with other
+statistics
+
+Boss: "I just heard that light travels faster than sound. I'm wondering if I should shout when I speak, just so my lips appear to sync-up with my words.""
+Dilbert (thought): "A little knowledge can be a ridiculous thing."
+-Scott Adams
+
+Distributed as-is; no warranty is given.
+******************************************************************************/</span>
+
+<span class="cp">#include</span> <span class="cpf">"Maxbotix.h"</span><span class="cp">
+</span><span class="c1">// #include &lt;SoftwareSerial.h&gt;</span>
+
+<span class="n">Maxbotix</span><span class="o">::</span><span class="n">Maxbotix</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">DataPin</span><span class="p">)</span> <span class="o">:</span> <span class="n">softSerial</span><span class="p">(</span><span class="n">DataPin</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1">//Pass data pin into external initializer</span>
+<span class="p">{</span>
+  <span class="c1">// RxPin = DataPin;</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">Maxbotix</span><span class="o">::</span><span class="n">begin</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">_nPings</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">_writeAll</span><span class="p">,</span> \
+                        <span class="kt">uint8_t</span> <span class="n">_ExPin</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Serial.println(RxPin); //DEBUG!</span>
+    <span class="c1">// RxPin = _RxPin;</span>
+    <span class="c1">// nPings = _nPings;</span>
+    <span class="n">nPings</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">//DEBUG!</span>
+    <span class="n">writeAll</span> <span class="o">=</span> <span class="n">_writeAll</span><span class="p">;</span>
+    <span class="n">ExPin</span> <span class="o">=</span> <span class="n">_ExPin</span><span class="p">;</span>
+
+    <span class="c1">// Not sure if this will work</span>
+    <span class="c1">// softSerial = new SoftwareSerial(RxPin, 21);</span>
+
+    <span class="c1">// Test if npings is in the proper range</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">nPings</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+      <span class="n">nPings</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+      <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int16_t</span> <span class="n">Maxbotix</span><span class="o">::</span><span class="n">getRange</span><span class="p">()</span>  <span class="c1">//will retrun distance to surface</span>
+<span class="p">{</span>
+  <span class="c1">// static uint16_t ranges[nPings];</span>
+  <span class="c1">// pinMode(RxPin, INPUT);</span>
+  <span class="c1">// Serial.println("START"); //DEBUG!</span>
+  <span class="n">softSerial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+
+  <span class="c1">// Input range is in the format R####&lt;\r&gt;</span>
+  <span class="c1">// R + 4 chars + carriage return + null = 7</span>
+  <span class="c1">// I will accept only ASCII numeric values, so will shorten this to 5</span>
+  <span class="c1">// 4 chars between 48 and 57 (inclusive) + null</span>
+  <span class="kt">char</span> <span class="n">range</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
+  <span class="kt">char</span> <span class="n">_tmpchar</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">success_flag</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+  <span class="kt">int16_t</span> <span class="n">rangeInt</span><span class="p">;</span>
+  <span class="c1">// counter</span>
+  <span class="kt">uint8_t</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+  <span class="c1">// Timeout: this should be long enough for 4 readings, and should be</span>
+  <span class="c1">// triggered iff something has gone really wrong</span>
+  <span class="c1">//Fix?? Needs to be unisgned long due to size comparison?</span>
+  <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">timeout</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> <span class="c1">//Message transmit time  //DEBUG! Initally 20ms</span>
+  <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">wait</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span> <span class="c1">//Up to ~125ms between transmissions</span>
+
+  <span class="c1">// Remove junk from the serial line -- this may be a lot if there is no</span>
+  <span class="c1">// excitation applied and power has been on for a while</span>
+  <span class="n">serialBufferClear</span><span class="p">();</span>
+
+  <span class="c1">//Excite the sensor to produce a pulse, if you have selected to do so.</span>
+  <span class="c1">// if (ExPin &gt;= 0){</span>
+  <span class="c1">//   pinMode(ExPin, OUTPUT);</span>
+  <span class="c1">//   digitalWrite(ExPin, HIGH);</span>
+  <span class="c1">//   delay(1);</span>
+  <span class="c1">//   digitalWrite(ExPin, LOW);</span>
+  <span class="c1">// }</span>
+
+  <span class="c1">// Get the 4 characters; if a carriage return is encountered, start fresh</span>
+  <span class="c1">// from the beginning.</span>
+  <span class="c1">// Time differences are unsigned; rollovers are a non-issue when differencing</span>
+
+  <span class="kt">uint32_t</span> <span class="n">start_time</span> <span class="o">=</span> <span class="n">millis</span><span class="p">();</span>
+
+  <span class="k">while</span> <span class="p">(</span> <span class="p">(</span><span class="n">millis</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">wait</span> <span class="o">&amp;&amp;</span> <span class="n">_tmpchar</span> <span class="o">!=</span> <span class="sc">'R'</span><span class="p">){</span>
+    <span class="n">_tmpchar</span> <span class="o">=</span> <span class="n">softSerial</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+    <span class="c1">// Serial.println(_tmpchar); //DEBUG!</span>
+  <span class="p">}</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">_tmpchar</span> <span class="o">==</span> <span class="sc">'R'</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Serial.println("BANG!"); //DEBUG!</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">millis</span><span class="p">();</span>
+    <span class="k">while</span> <span class="p">(</span> <span class="p">(</span><span class="n">millis</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">timeout</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">success_flag</span><span class="p">){</span> <span class="c1">//DEBUG!</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">softSerial</span><span class="p">.</span><span class="n">available</span><span class="p">()){</span>
+        <span class="c1">// Serial.println("BANG1!"); //DEBUG!</span>
+        <span class="c1">//Fix, Wait for 'R'</span>
+        <span class="n">_tmpchar</span> <span class="o">=</span> <span class="n">softSerial</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+        <span class="c1">// Serial.println(_tmpchar); //DEBUG!</span>
+        <span class="c1">// Test if ASCII number</span>
+        <span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="n">_tmpchar</span> <span class="o">&gt;=</span> <span class="mi">48</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">_tmpchar</span> <span class="o">&lt;=</span> <span class="mi">57</span><span class="p">)</span> <span class="p">){</span>
+          <span class="c1">// Serial.print(" Valid"); //DEBUG!</span>
+          <span class="n">range</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">_tmpchar</span><span class="p">;</span>
+          <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">_tmpchar</span> <span class="o">==</span> <span class="mi">13</span><span class="p">){</span>
+          <span class="c1">// Serial.print(" Reset"); //DEBUG!</span>
+          <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// reset to the start of a measurement</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+      <span class="c1">// Break if enough characters are recorded</span>
+      <span class="c1">// Serial.print("i = "); Serial.println(i); //DEBUG!</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">4</span><span class="p">){</span>
+        <span class="n">success_flag</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="c1">// break; //DEBUG!</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="c1">// Serial.println("END!"); //DEBUG!</span>
+  <span class="n">softSerial</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="c1">//DEBUG!</span>
+
+  <span class="c1">// Double-check that the NULL will not cause a problem here</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">success_flag</span><span class="p">){</span>
+    <span class="c1">// Serial.println("BANG!");</span>
+     <span class="n">rangeInt</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">range</span><span class="p">);</span>
+     <span class="c1">// negative if an error value</span>
+     <span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="n">rangeInt</span> <span class="o">==</span> <span class="mi">5000</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">rangeInt</span> <span class="o">==</span> <span class="mi">500</span><span class="p">)</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="n">rangeInt</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+     <span class="p">}</span>
+    <span class="c1">// Serial.println(rangeInt);//DEBUG!</span>
+    <span class="k">return</span> <span class="n">rangeInt</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span><span class="p">{</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">9999</span><span class="p">;</span> <span class="c1">// hard-coded communications error value</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Backwards compatibility: capital case</span>
+<span class="kt">int16_t</span> <span class="n">Maxbotix</span><span class="o">::</span><span class="n">GetRange</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">getRange</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">String</span> <span class="n">Maxbotix</span><span class="o">::</span><span class="n">getHeader</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">nPings</span> <span class="o">==</span> <span class="mi">1</span><span class="p">){</span>
+    <span class="k">return</span> <span class="s">"Distance [mm], "</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">nPings</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+    <span class="k">return</span> <span class="s">"MAXBOTIX ERROR: SET NPINGS &gt; 0."</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span><span class="p">{</span>
+    <span class="n">String</span> <span class="n">allPings</span> <span class="o">=</span> <span class="n">String</span><span class="p">(</span><span class="s">""</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">writeAll</span><span class="p">){</span>
+      <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">nPings</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="n">allPings</span> <span class="o">=</span> <span class="n">String</span><span class="p">(</span><span class="n">allPings</span> <span class="o">+</span> <span class="s">"Distace [mm], "</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nf">String</span><span class="p">(</span><span class="n">allPings</span> <span class="o">+</span> \
+                  <span class="s">"Mean Distace [mm], StDev Distance [mm], Error Count, "</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Backwards compatibility: capital case</span>
+<span class="n">String</span> <span class="n">Maxbotix</span><span class="o">::</span><span class="n">GetHeader</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">getHeader</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">String</span> <span class="n">Maxbotix</span><span class="o">::</span><span class="n">getString</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">String</span> <span class="n">outstr</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">nPings</span> <span class="o">==</span> <span class="mi">1</span><span class="p">){</span>
+    <span class="n">outstr</span> <span class="o">=</span> <span class="n">String</span><span class="p">(</span><span class="n">GetRange</span><span class="p">())</span> <span class="o">+</span> <span class="s">","</span><span class="p">;</span>  <span class="c1">//Return range as string</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">nPings</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+    <span class="n">outstr</span> <span class="o">=</span> <span class="s">"NO PINGS REQUESTED,"</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span><span class="p">{</span>
+    <span class="n">outstr</span> <span class="o">=</span> <span class="s">""</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">writeAll</span><span class="p">){</span>
+      <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">nPings</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="n">outstr</span> <span class="o">=</span> <span class="n">String</span><span class="p">(</span> <span class="n">outstr</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">ranges</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="s">","</span> <span class="p">)</span> <span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="kt">float</span> <span class="n">_mean</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">ranges</span><span class="p">,</span> <span class="n">nPings</span><span class="p">);</span>
+    <span class="kt">float</span> <span class="n">_SD</span> <span class="o">=</span> <span class="n">standardDeviation</span><span class="p">(</span><span class="n">ranges</span><span class="p">,</span> <span class="n">nPings</span><span class="p">,</span> <span class="n">_mean</span><span class="p">);</span>
+    <span class="kt">uint8_t</span> <span class="n">_nerr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">nPings</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">ranges</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">){</span>
+        <span class="n">_nerr</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">outstr</span> <span class="o">=</span> <span class="n">String</span><span class="p">(</span> <span class="n">outstr</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">_mean</span><span class="p">)</span> <span class="o">+</span> <span class="s">","</span> <span class="p">);</span>
+    <span class="n">outstr</span> <span class="o">=</span> <span class="n">String</span><span class="p">(</span> <span class="n">outstr</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">_SD</span><span class="p">)</span> <span class="o">+</span> <span class="s">","</span> <span class="p">);</span>
+    <span class="n">outstr</span> <span class="o">=</span> <span class="n">String</span><span class="p">(</span> <span class="n">outstr</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">_nerr</span><span class="p">));</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">outstr</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Backwards compatibility: capital case</span>
+<span class="n">String</span> <span class="n">Maxbotix</span><span class="o">::</span><span class="n">GetString</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">getString</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="c1">// PRIVATE FUNCTIONS //</span>
+
+<span class="kt">void</span> <span class="n">Maxbotix</span><span class="o">::</span><span class="n">serialBufferClear</span><span class="p">(){</span>
+  <span class="k">while</span><span class="p">(</span><span class="n">softSerial</span><span class="p">.</span><span class="n">available</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">softSerial</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int32_t</span> <span class="n">Maxbotix</span><span class="o">::</span><span class="n">sum</span><span class="p">(</span><span class="kt">uint16_t</span> <span class="n">values</span><span class="p">[],</span> <span class="kt">uint8_t</span> <span class="n">nvalues</span><span class="p">,</span> \
+                       <span class="kt">bool</span> <span class="n">errorNegative</span><span class="p">){</span>
+  <span class="kt">uint32_t</span> <span class="n">_sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">nvalues</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="n">errorNegative</span> <span class="o">==</span> <span class="nb">false</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">){</span>
+      <span class="n">_sum</span> <span class="o">+=</span> <span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+  <span class="k">return</span> <span class="n">_sum</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">float</span> <span class="n">Maxbotix</span><span class="o">::</span><span class="n">mean</span><span class="p">(</span><span class="kt">uint16_t</span> <span class="n">values</span><span class="p">[],</span> <span class="kt">uint8_t</span> <span class="n">nvalues</span><span class="p">,</span> \
+                     <span class="kt">bool</span> <span class="n">errorNegative</span><span class="p">){</span>
+  <span class="kt">uint32_t</span> <span class="n">_sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">nvalues_valid</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">mean</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">nvalues</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="n">errorNegative</span> <span class="o">==</span> <span class="nb">false</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">){</span>
+      <span class="n">_sum</span> <span class="o">+=</span> <span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+      <span class="n">nvalues_valid</span> <span class="o">+=</span> <span class="mf">1.</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="c1">// how to handle if nvalues_valid = 0? Will it throw an error?</span>
+  <span class="n">mean</span> <span class="o">=</span> <span class="n">_sum</span><span class="o">/</span><span class="n">nvalues_valid</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">mean</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">float</span> <span class="n">Maxbotix</span><span class="o">::</span><span class="n">standardDeviation</span><span class="p">(</span><span class="kt">uint16_t</span> <span class="n">values</span><span class="p">[],</span> <span class="kt">uint8_t</span> <span class="n">nvalues</span><span class="p">,</span> \
+                                  <span class="kt">float</span> <span class="n">mean</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">errorNegative</span><span class="p">){</span>
+  <span class="kt">float</span> <span class="n">sumsquares</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="kt">float</span> <span class="n">nvalues_valid</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">nvalues</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="n">errorNegative</span> <span class="o">==</span> <span class="nb">false</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">){</span>
+      <span class="n">sumsquares</span> <span class="o">+=</span> <span class="n">square</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">mean</span><span class="p">);</span>
+      <span class="n">nvalues_valid</span> <span class="o">+=</span> <span class="mf">1.</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nf">sqrt</span><span class="p">(</span><span class="n">sumsquares</span><span class="o">/</span><span class="n">nvalues_valid</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<p>Updated on 2026-09-22 at 23:10:11 +0000</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+  
+
+  
+
+
+        
+
+
+
+      </footer>
+
+      
+
+      
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/MaxBotix_Library/feed.xml"><i class="fas fa-fw fa-square-rss" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://docs.northernwidget.com">MaxBotix Library</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+
+  <script src="/MaxBotix_Library/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
